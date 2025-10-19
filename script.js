@@ -142,4 +142,52 @@ function exportarCSV() {
 }
 
 // Inicializar
+
 renderizarTabela();
+const API_URL = "https://script.google.com/macros/s/const API_URL = "https://script.google.com/macros/s/SEU_URL_DO_APPS_SCRIPT/exec";
+
+// Carregar produtos da planilha
+async function carregarDaPlanilha() {
+  const res = await fetch(API_URL);
+  const data = await res.json();
+  produtos = data.map(p => ({
+    nome: p.nome,
+    fornecedor: p.fornecedor,
+    valor: parseFloat(p.valor),
+    quantidade: parseInt(p.quantidade)
+  }));
+  salvarDados();
+  renderizarTabela();
+}
+
+// Enviar novo produto para planilha
+async function enviarParaPlanilha(produto) {
+  await fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify(produto),
+    headers: { "Content-Type": "application/json" }
+  });
+}/exec";
+
+// Carregar produtos da planilha
+async function carregarDaPlanilha() {
+  const res = await fetch(API_URL);
+  const data = await res.json();
+  produtos = data.map(p => ({
+    nome: p.nome,
+    fornecedor: p.fornecedor,
+    valor: parseFloat(p.valor),
+    quantidade: parseInt(p.quantidade)
+  }));
+  salvarDados();
+  renderizarTabela();
+}
+
+// Enviar novo produto para planilha
+async function enviarParaPlanilha(produto) {
+  await fetch(API_URL, {
+    method: "POST",
+    body: JSON.stringify(produto),
+    headers: { "Content-Type": "application/json" }
+  });
+}
