@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Glipearte - Controle de Estoque</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <img src="logoglipearte.png" alt="Logo Glipearte" class="logo" />
+    <h1>Controle de Estoque</h1>
+  </header>
+
+  <main>
+    <section class="acoes">
+      <button onclick="abrirModal('produto')">+ Novo Produto</button>
+      <button onclick="abrirModal('fornecedor')">+ Novo Fornecedor</button>
+      <button onclick="exportarCSV()">⬇ Exportar CSV</button>
+      <button onclick="window.print()">📄 Imprimir</button>
+    </section>
+
+    <section class="filtro">
+      <label>Filtrar por fornecedor:</label>
+      <input type="text" id="filtroFornecedor" placeholder="Digite o nome do fornecedor" onkeyup="filtrarTabela()" />
+    </section>
+
+    <table id="tabelaEstoque">
+      <thead>
+        <tr>
+          <th>Produto</th>
+          <th>Fornecedor</th>
+          <th>Valor Unitário (R$)</th>
+          <th>Quantidade</th>
+          <th>Total Investido (R$)</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <p class="total">Valor Total Investido: <strong id="valorTotal">R$ 0,00</strong></p>
+  </main>
+
+  <!-- Modal Produto -->
+  <dialog id="modalProduto">
+    <h2>Cadastrar Produto</h2>
+    <form id="formProduto">
+      <label>Nome do Produto:</label>
+      <input type="text" name="nome" required />
+      <label>Fornecedor:</label>
+      <select name="fornecedor" required></select>
+      <label>Valor Unitário (R$):</label>
+      <input type="number" step="0.01" name="valor" required />
+      <label>Quantidade:</label>
+      <input type="number" min="1" name="quantidade" required />
+      <button type="submit">Salvar</button>
+      <button type="button" onclick="fecharModal('produto')">Cancelar</button>
+    </form>
+  </dialog>
+
+  <!-- Modal Fornecedor -->
+  <dialog id="modalFornecedor">
+    <h2>Cadastrar Fornecedor</h2>
+    <form id="formFornecedor">
+      <label>Nome do Fornecedor:</label>
+      <input type="text" name="nome" required />
+      <label>Contato (telefone/email):</label>
+      <input type="text" name="contato" required />
+      <button type="submit">Salvar</button>
+      <button type="button" onclick="fecharModal('fornecedor')">Cancelar</button>
+    </form>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>

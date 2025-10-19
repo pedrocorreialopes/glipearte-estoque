@@ -1,0 +1,93 @@
+:root {
+  --cor-primaria: #FFC700;
+  --cor-secundaria: #FF8C00;
+  --cor-destaque: #32CD32;
+  --cor-fundo: #FFFDF5;
+  --cor-texto: #333;
+  --cor-borda: #DDD;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+}
+
+header {
+  background-color: var(--cor-primaria);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  height: 50px;
+}
+
+h1 {
+  margin: 0;
+  color: var(--cor-texto);
+}
+
+.acoes {
+  margin: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+button {
+  background-color: var(--cor-secundaria);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--cor-destaque);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem;
+}
+
+th, td {
+  padding: 0.5rem;
+  border: 1px solid var(--cor-borda);
+  text-align: left;
+}
+
+th {
+  background-color: var(--cor-primaria);
+}
+
+.total {
+  margin: 1rem;
+  font-size: 1.2rem;
+}
+
+dialog {
+  border: none;
+  border-radius: 8px;
+  padding: 1rem;
+  width: 90%;
+  max-width: 400px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+input, select {
+  padding: 0.5rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 4px;
+}
