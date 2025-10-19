@@ -1,5 +1,5 @@
 // ========= CONFIGURAÇÃO DA PLANILHA =========
-const API_URL = "https://script.google.com/macros/s/1EXfxQG0c7aGVvaDMWaPSqaLzSvCA6Avt8VXF0gBLcpiDNVd6M8DQvieI/exec";
+const API_URL = "https://script.google.com/macros/s/https://script.google.com/macros/s/AKfycbycqB5Ktj4Xwdn4fm7Rrwf9Hvh4NhBIhzWnhD3qtFZNwehRTxmmIm78bOKNp_VxYwAo8g/exec";
 
 // ========= DADOS INICIAIS (DO PDF) =========
 const INITIAL_DATA = [
