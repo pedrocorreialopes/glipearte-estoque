@@ -20,7 +20,7 @@ const INITIAL_DATA = [
   { nome: "Arco circular 1,20m X 1,20m", fornecedor: "Decorar e Festejar", valor: 150.13, quantidade: 1 }
 ];
 
-// ========= CARREGAR DADOS LOCAl =========
+// ========= CARREGAR DADOS LOCAIS =========
 let produtos = JSON.parse(localStorage.getItem("glipearte_produtos")) || INITIAL_DATA;
 let fornecedores = JSON.parse(localStorage.getItem("glipearte_fornecedores")) || [];
 
@@ -54,13 +54,13 @@ function renderizarTabela(filtrados = produtos) {
   document.getElementById("valorTotal").textContent = `R$ ${total.toFixed(2).replace(".", ",")}`;
 }
 
-// ========= FUNÇÕES DE SINCRONIZAÇÃO =========
+// ========= SINCRONIZAÇÃO COM PLANILHA =========
 async function carregarDaPlanilha() {
   try {
     const res = await fetch(API_URL, {
       method: "GET",
       mode: "cors",
-      redirect: "follow"
+      cache: "no-cache"
     });
     if (!res.ok) throw new Error("Erro na rede: " + res.status);
     const data = await res.json();
@@ -77,19 +77,20 @@ async function carregarDaPlanilha() {
     alert("❌ Erro ao carregar da planilha: " + err.message);
   }
 }
+
 async function enviarParaPlanilha(produto) {
   try {
     await fetch(API_URL, {
       method: "POST",
       body: JSON.stringify(produto),
       headers: { "Content-Type": "application/json" },
-      mode: "cors",
-      redirect: "follow"
+      mode: "cors"
     });
   } catch (err) {
     console.warn("❌ Erro ao enviar para planilha:", err.message);
   }
 }
+
 // ========= MODAIS E FORMS =========
 function abrirModal(tipo) {
   if (tipo === "produto") {
@@ -189,6 +190,4 @@ function exportarCSV() {
 }
 
 // ========= INICIALIZAR =========
-
 renderizarTabela();
-
