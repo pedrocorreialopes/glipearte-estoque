@@ -1,3 +1,7 @@
+// ========= CONFIGURAÇÃO DA PLANILHA =========
+const API_URL = "https://script.google.com/macros/s/1EXfxQG0c7aGVvaDMWaPSqaLzSvCA6Avt8VXF0gBLcpiDNVd6M8DQvieI/exec";
+
+// ========= DADOS INICIAIS (DO PDF) =========
 const INITIAL_DATA = [
   { nome: "Trio de cilindros MDF", fornecedor: "Pedreira Decor", valor: 120.22, quantidade: 1 },
   { nome: "Inflador elétrico de balões", fornecedor: "Bazar Mking", valor: 79.48, quantidade: 1 },
@@ -16,6 +20,7 @@ const INITIAL_DATA = [
   { nome: "Arco circular 1,20m X 1,20m", fornecedor: "Decorar e Festejar", valor: 150.13, quantidade: 1 }
 ];
 
+// ========= CARREGAR DADOS LOCAl =========
 let produtos = JSON.parse(localStorage.getItem("glipearte_produtos")) || INITIAL_DATA;
 let fornecedores = JSON.parse(localStorage.getItem("glipearte_fornecedores")) || [];
 
@@ -24,6 +29,7 @@ function salvarDados() {
   localStorage.setItem("glipearte_fornecedores", JSON.stringify(fornecedores));
 }
 
+// ========= RENDERIZAR TABELA =========
 function renderizarTabela(filtrados = produtos) {
   const tbody = document.querySelector("#tabelaEstoque tbody");
   tbody.innerHTML = "";
@@ -48,12 +54,38 @@ function renderizarTabela(filtrados = produtos) {
   document.getElementById("valorTotal").textContent = `R$ ${total.toFixed(2).replace(".", ",")}`;
 }
 
-function filtrarTabela() {
-  const termo = document.getElementById("filtroFornecedor").value.toLowerCase();
-  const filtrados = produtos.filter(p => p.fornecedor.toLowerCase().includes(termo));
-  renderizarTabela(filtrados);
+// ========= FUNÇÕES DE SINCRONIZAÇÃO =========
+async function carregarDaPlanilha() {
+  try {
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    produtos = data.map(p => ({
+      nome: p.nome,
+      fornecedor: p.fornecedor,
+      valor: parseFloat(p.valor),
+      quantidade: parseInt(p.quantidade)
+    }));
+    salvarDados();
+    renderizarTabela();
+    alert("✅ Dados da planilha carregados com sucesso!");
+  } catch (err) {
+    alert("❌ Erro ao carregar da planilha: " + err.message);
+  }
 }
 
+async function enviarParaPlanilha(produto) {
+  try {
+    await fetch(API_URL, {
+      method: "POST",
+      body: JSON.stringify(produto),
+      headers: { "Content-Type": "application/json" }
+    });
+  } catch (err) {
+    console.warn("❌ Erro ao enviar para planilha:", err.message);
+  }
+}
+
+// ========= MODAIS E FORMS =========
 function abrirModal(tipo) {
   if (tipo === "produto") {
     atualizarSelectFornecedores();
@@ -78,22 +110,25 @@ function atualizarSelectFornecedores() {
   });
 }
 
-document.getElementById("formProduto").addEventListener("submit", e => {
+// ========= EVENTOS DE FORMULÁRIO =========
+document.getElementById("formProduto").addEventListener("submit", async (e) => {
   e.preventDefault();
   const data = Object.fromEntries(new FormData(e.target).entries());
-  produtos.push({
+  const novoProduto = {
     nome: data.nome,
     fornecedor: data.fornecedor,
     valor: parseFloat(data.valor),
     quantidade: parseInt(data.quantidade)
-  });
+  };
+  produtos.push(novoProduto);
   salvarDados();
   renderizarTabela();
+  await enviarParaPlanilha(novoProduto);
   e.target.reset();
   fecharModal("produto");
 });
 
-document.getElementById("formFornecedor").addEventListener("submit", e => {
+document.getElementById("formFornecedor").addEventListener("submit", (e) => {
   e.preventDefault();
   const data = Object.fromEntries(new FormData(e.target).entries());
   fornecedores.push({ nome: data.nome, contato: data.contato });
@@ -101,6 +136,13 @@ document.getElementById("formFornecedor").addEventListener("submit", e => {
   e.target.reset();
   fecharModal("fornecedor");
 });
+
+// ========= OUTRAS FUNÇÕES =========
+function filtrarTabela() {
+  const termo = document.getElementById("filtroFornecedor").value.toLowerCase();
+  const filtrados = produtos.filter(p => p.fornecedor.toLowerCase().includes(termo));
+  renderizarTabela(filtrados);
+}
 
 function removerProduto(index) {
   if (confirm("Deseja remover este produto?")) {
@@ -141,53 +183,5 @@ function exportarCSV() {
   a.click();
 }
 
-// Inicializar
-
+// ========= INICIALIZAR =========
 renderizarTabela();
-const API_URL = "https://script.google.com/macros/s/const API_URL = "https://script.google.com/macros/s/SEU_URL_DO_APPS_SCRIPT/exec";
-
-// Carregar produtos da planilha
-async function carregarDaPlanilha() {
-  const res = await fetch(API_URL);
-  const data = await res.json();
-  produtos = data.map(p => ({
-    nome: p.nome,
-    fornecedor: p.fornecedor,
-    valor: parseFloat(p.valor),
-    quantidade: parseInt(p.quantidade)
-  }));
-  salvarDados();
-  renderizarTabela();
-}
-
-// Enviar novo produto para planilha
-async function enviarParaPlanilha(produto) {
-  await fetch(API_URL, {
-    method: "POST",
-    body: JSON.stringify(produto),
-    headers: { "Content-Type": "application/json" }
-  });
-}/exec";
-
-// Carregar produtos da planilha
-async function carregarDaPlanilha() {
-  const res = await fetch(API_URL);
-  const data = await res.json();
-  produtos = data.map(p => ({
-    nome: p.nome,
-    fornecedor: p.fornecedor,
-    valor: parseFloat(p.valor),
-    quantidade: parseInt(p.quantidade)
-  }));
-  salvarDados();
-  renderizarTabela();
-}
-
-// Enviar novo produto para planilha
-async function enviarParaPlanilha(produto) {
-  await fetch(API_URL, {
-    method: "POST",
-    body: JSON.stringify(produto),
-    headers: { "Content-Type": "application/json" }
-  });
-}
