@@ -57,7 +57,12 @@ function renderizarTabela(filtrados = produtos) {
 // ========= FUNÇÕES DE SINCRONIZAÇÃO =========
 async function carregarDaPlanilha() {
   try {
-    const res = await fetch(API_URL);
+    const res = await fetch(API_URL, {
+      method: "GET",
+      mode: "cors",
+      redirect: "follow"
+    });
+    if (!res.ok) throw new Error("Erro na rede: " + res.status);
     const data = await res.json();
     produtos = data.map(p => ({
       nome: p.nome,
@@ -72,19 +77,19 @@ async function carregarDaPlanilha() {
     alert("❌ Erro ao carregar da planilha: " + err.message);
   }
 }
-
 async function enviarParaPlanilha(produto) {
   try {
     await fetch(API_URL, {
       method: "POST",
       body: JSON.stringify(produto),
-      headers: { "Content-Type": "application/json" }
+      headers: { "Content-Type": "application/json" },
+      mode: "cors",
+      redirect: "follow"
     });
   } catch (err) {
     console.warn("❌ Erro ao enviar para planilha:", err.message);
   }
 }
-
 // ========= MODAIS E FORMS =========
 function abrirModal(tipo) {
   if (tipo === "produto") {
