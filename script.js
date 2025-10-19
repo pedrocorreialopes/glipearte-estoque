@@ -191,3 +191,4 @@ function exportarCSV() {
 // ========= INICIALIZAR =========
 
 renderizarTabela();
+
