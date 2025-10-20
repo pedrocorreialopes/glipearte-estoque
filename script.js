@@ -1,5 +1,5 @@
 // ========= CONFIGURAÇÃO DA PLANILHA =========
-const API_URL = "https://script.google.com/macros/s/AKfycbyJ5M_IVS774FMIQxEBzg8dmeVK2_uaxrYZBsl4jSWXf8jC9EMnIdMOvEPjzIRe7oqY6A/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbxw2I5diTZ13WlCZQ9Mb24o29RS-ldJn2zDNQVTyH1O6yr1XH4MMQ92Y4C6kE7mt3TAFg/exec";
 
 // ========= DADOS INICIAIS (DO PDF) =========
 const INITIAL_DATA = [
@@ -191,4 +191,5 @@ function exportarCSV() {
 
 // ========= INICIALIZAR =========
 renderizarTabela();
+
 
