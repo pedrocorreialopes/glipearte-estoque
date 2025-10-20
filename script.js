@@ -17,6 +17,7 @@ const INITIAL_DATA = [
   { nome: "Painel blackout 1,50m X 1,50m", fornecedor: "Grupo Rocket", valor: 39.85, quantidade: 1 },
   { nome: "Medidor de balões", fornecedor: "Paraíso do MDF", valor: 19.50, quantidade: 1 },
   { nome: "Painéis de festas Natal / Ano Novo", fornecedor: "KN Artes", valor: 112.33, quantidade: 1 },
+  { nome: "fita de cetim", fornecedor: "teste", valor: 5.5, quantidade: 1o },
   { nome: "Arco circular 1,20m X 1,20m", fornecedor: "Decorar e Festejar", valor: 150.13, quantidade: 1 }
 ];
 
@@ -191,5 +192,6 @@ function exportarCSV() {
 
 // ========= INICIALIZAR =========
 renderizarTabela();
+
 
 
